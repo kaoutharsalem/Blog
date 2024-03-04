@@ -1,0 +1,32 @@
+  <div class="flex items-center w-1/2">
+    <div class="w-full">
+      <% if @article.comments.any? %>
+        <div class="p-4  w-full">
+            <div class="grid grid-cols-12 text-gray-50 w-full">
+                <% unless comment.archived? || !comment.commenter %>
+                  <div class="contents w-full">
+                    <div class="col-start-2 col-end-4 mx-auto relative">
+                      <div class="h-full w-6 flex items-center justify-center">
+                        <div class="h-full w-1 bg-stone-400 pointer-events-none"></div>
+                      </div>
+                      <div class="w-6 h-6 absolute top-1/2 rounded-full bg-stone-400 shadow text-center">
+                        <i class="fas fa-check-circle text-white"></i>
+                      </div>
+                    </div>
+                    <div class="bg-stone-400 col-start-4 col-end-11 p-4 rounded-xl my-2 shadow-md w-full">
+                      <h3 class="font-semibold text-lg mb-1">Comment</h3>
+                      <p class="leading-tight pb-2 text-justify"><%= comment.body %></p>
+                      <div><%= link_to "Delete", [comment.article, comment], method: :delete, data: { confirm: "Are you sure?" }, class: 'shadow bg-pink-500 font-semibold text-white w-1/4 rounded-xl hover:bg-pink-600 text-center py-2 px-4'%></div>
+                    </div>
+                  </div>
+                <% end %>
+            </div>
+        </div>
+      <% else %>
+        <p class="text-center">No comments yet...</p>
+      <% end %>
+    </div>
+  </div>
+
+
+

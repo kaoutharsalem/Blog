@@ -1,0 +1,89 @@
+
+  <html>
+  <head>
+    <title>Blog</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ 
+    <style>
+        html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+              background-image: linear-gradient(to bottom right, #FECDD3, #FBC4C9);
+
+        }
+
+        main {
+          max-height: 100%; 
+        }
+    </style> 
+    <script>
+  function myFunc(id){
+        alert(id);
+}
+  document.addEventListener('DOMContentLoaded', function() {
+  const seeMoreButtons = document.querySelectorAll('.see-more');
+  seeMoreButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+      event.preventDefault();
+
+      const articleId = this.dataset.articleId;
+      const fullBodyElement = document.getElementById(`article-${articleId}-full-body`);
+
+      if (fullBodyElement.classList.contains('hidden')) {
+        fullBodyElement.classList.remove('hidden');
+        this.textContent = 'See less';
+      } else {
+        fullBodyElement.classList.add('hidden');
+        this.textContent = 'See more';
+      }
+    });
+  });
+});
+</script>
+<style>
+
+</style>
+  </head>
+  <body class="bg-cover containerr " >
+    <main class="mx-auto rounded-lg w-full">
+    <div class="relative px-8 pt-16 pb-16 rounded-lg h-2/5 mb-24 mt-8 w-full">
+      <div class="relative mx-auto w-full">
+        <div class="mx-auto mt-12 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-4">
+          <% @articles.each do |article| %>
+            <% unless article.archived? %>
+              <div class="flex flex-col overflow-hidden shadow-lg">
+                <div class="flex-shrink-0">
+                  <% if article.image.attached? %>
+                    <%= image_tag article.image, class: "h-60 w-full object-cover"%>
+                  <% else %>
+                    <img src="/path/to/default/image.jpg" class="h-60 w-full object-cover">
+                  <% end %>
+                </div>
+                <div class="flex flex-1 flex-col justify-between p-6" style="background: linear-gradient(to right, rgb(214, 211, 209), rgba(255, 255, 255, 0));">
+                  <div class="flex-1">
+                    <a href="#" class="mt-2 block">
+                      <p class="text-xl font-semibold text-gray-600"><%= link_to article.title, article%></p>  
+                      <p class="mt-3 text-base text-gray-500 truncate line-clamp-3" id="article-<%= article.id %>-body"><%= article.body%></p>
+                      <p class="hidden" id="article-<%= article.id %>-full-body"><%= article.body%></p>
+                      <p class="mr-0 mt-2 text-sm text-blue-500 hover:underline see-more"><%= link_to "See more", article%></p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    </main>
+  </body>
+</html>
+

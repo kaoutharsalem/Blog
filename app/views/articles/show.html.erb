@@ -1,0 +1,33 @@
+
+
+<div class="flex flex-wrap justify-around items-start">
+    <div class="flex justify-between w-2/6 ">
+      <div class="article shadow-xl  rounded-3xl w-full mt-10 mb-8 px-10 sm:h-[65vh] py-8" style="background: linear-gradient(to left, rgb(214, 211, 209), rgba(255, 255, 255, 0));">
+        <div class="flex justify-center mb-5">
+         
+          <% if @article.image.attached? %>
+    <%= image_tag @article.image, class: "rounded-full w-48 h-48" %>
+  <% else %>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3rgH8miiiJ4Mh4ngRtXZQcWZHVdIMeI9zDT_sHcIfSQ&s"  class="rounded-full w-48 h-48">
+  <% end %>
+        </div>
+        <div class="flex justify-center pb-5 border-b-2 border-gray-500">
+          <p class="text-xl font-semibold text-gray-600"><%= @article.title %></p>
+        </div>
+        <div class="flex justify-center pb-5">
+          <p class="text-base text-gray-500"><%= @article.body %></p>
+        </div>
+        <div class="flex justify-center items-center">
+          <%= link_to "Edit", edit_article_path(@article), class: "py-3 border-2 border-gray-400 dark:border-gray-700 font-semibold text-black dark:text-black rounded-xl  hover:bg-pink-200  my-6 py-2text-white w-1/4 rounded-xl  text-center" %>
+          <%= link_to "Delete", article_path(@article), method: :delete, data: { confirm: "Are you sure?" }, class: "py-3 bg-pink-500 font-semibold text-white w-1/4 rounded-xl hover:bg-pink-600 text-center" %>
+        </div>
+      </div>
+    </div>
+    <div class="shadow-xl rounded-3xl mt-10 px-10 mb-8 py-8 w-2/6 h-[65vh]"style="background: linear-gradient(to right, rgb(214, 211, 209), rgba(255, 255, 255, 0));">
+        <%= render 'comments/form' %>
+    </div>
+  </div>
+  <div style="max-height: 200px; overflow-y: auto;">
+    <%= render @article.comments %>
+  </div>
+</div>
